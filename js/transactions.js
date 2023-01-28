@@ -33,6 +33,8 @@ document.getElementById("transaction-form").addEventListener("submit", function(
     e.target.reset();
     myModal.hide();  
 
+    getTransactions();
+
     alert("Lançamento adicionado com sucesso!")
         
 });
@@ -54,6 +56,8 @@ function checkLogged() {
     if(dataUser) {
         data = JSON.parse(dataUser);
     }  
+
+    getTransactions();
  
 }
 
@@ -66,13 +70,29 @@ function logout() {
 
 function getTransactions() {
     const transactions = data.transactions;
-    const transactionsHtml = ``;
+    let transactionsHtml = ``;
 
     if(transactions.length) {
         transactions.forEach((item) => {
-            let type = "Entrada"
+            let type = "Entrada";
+
+            if(item.type === "2") {
+                type = "Saída"
+            }
+
+            transactionsHtml += `
+                <tr>
+                    <th scope="row">${item.date}</th>
+                    <td>${item.value.toFixed(2)}</td>
+                    <td>${type}</td>
+                    <td>${item.description}</td>
+                </tr>
+            `
         })
     }
+
+    document.getElementById("transactions-list").innerHTML = transactionsHtml;
+
 }
 
 function saveData(data) {
