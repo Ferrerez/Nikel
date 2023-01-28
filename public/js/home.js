@@ -161,8 +161,7 @@ function getTotal() {
 
     document.getElementById("total").innerHTML = `R$ ${total.toFixed(2)}`;
 
-}
-    
+}    
 function saveData(data) {
     localStorage.setItem(data.login, JSON.stringify(data));
 }
